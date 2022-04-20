@@ -22,8 +22,12 @@ resource "aws_key_pair" "your_ssh_key" {
 
 resource "aws_instance" "coolify_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.small"
+  instance_type = "t3.micro"
   key_name      = aws_key_pair.your_ssh_key.key_name
+
+  root_block_device {
+    volume_size = 30
+  }
 
   vpc_security_group_ids = [
     aws_security_group.coolify_sg.id
